@@ -1,0 +1,158 @@
+{% extends 'Website/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+	<div class="ui center aligned container">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h4 style="text-align: center;">Manage products here</h4>
+			</div>
+			<div class="panel-body">
+				<div class="row" style="text-align: center;">
+					<div class="col-sm-3">
+						<a href="" data-toggle="modal" data-target="#addModal" class='btn btn-primary'>Add product</a>
+					</div>
+					<div class="col-sm-3">
+						<a href="" data-toggle="modal" data-target="#editModal" class='btn btn-primary'>Edit product</a>
+					</div>
+					<div class="col-sm-3">
+						<a href="" data-toggle="modal" data-target="#delModal" class='btn btn-primary'>Delete product</a>
+					</div>
+					<div class="col-sm-3">
+						<a href="" data-toggle="modal" data-target="#catModal" class='btn btn-primary'>Add Category</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br><br><br><br><br><br><br><br><br><br>
+
+
+	<div class="ui center aligned container">
+		<a href='{% url "sell_history" %}' class="ui huge black button">View Transaction History</a>
+	</div>
+
+	<div class="container-fluid">
+			<div class="modal fade" id="addModal" role="dialog">
+			<div class="modal-dialog">
+	  			<div class="modal-content">
+
+	    			<div class="modal-header">
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      				<h4 class="modal-title">Add a product</h4>
+	    			</div>
+
+	    			<div class="modal-body">
+					    <form method="POST" class="post-form" enctype="multipart/form-data">
+					    {% csrf_token %}    
+					        {{ event_form.as_p }}
+					        <button type="submit" class="save btn btn-primary">Submit</button>
+					    </form>
+	    			</div>
+
+	  			</div> 
+			</div>
+			</div>
+	</div>
+
+	<div class="container-fluid">
+			<div class="modal fade" id="catModal" role="dialog">
+			<div class="modal-dialog">
+	  			<div class="modal-content">
+
+	    			<div class="modal-header">
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      				<h4 class="modal-title">Add a category</h4>
+	    			</div>
+
+	    			<div class="modal-body">
+					    <form method="POST" action="{% url 'add_category' %}" class="post-form" enctype="multipart/form-data">
+					    {% csrf_token %}    
+					    	<div class="form-group">
+					        Category: <input name ='catname' class="form-control">
+					    	</div>
+					    	<div class="form-group">
+					        <button type="submit" class="save btn btn-primary">Submit</button>
+						    </div>
+					    </form>
+	    			</div>
+
+	  			</div> 
+			</div>
+			</div>
+	</div>
+
+	<div class="container-fluid">
+			<div class="modal fade" id="delModal" role="dialog">
+			<div class="modal-dialog">
+	  			<div class="modal-content">
+
+	    			<div class="modal-header">
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      				<h4 class="modal-title">Choose and delete product</h4>
+	    			</div>
+
+	    			<div class="modal-body">
+	    				<table class='table table-responsive table-bordered table-striped'>
+						<thead>
+							<tr>
+								<th>Name</th>
+		         				<th>Category</th>
+		         				<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in items %}
+							<tr>
+								<td>{{ item.name }} </td>
+								<td>{{ item.category }} </td>
+								<td><a href="{% url 'delete_product' item.pk %}" class='btn btn-danger'>Delete</a></td>
+						    </tr>
+						    {% endfor %}
+						</tbody>
+					</table>
+	    			</div>
+
+	  			</div> 
+			</div>
+			</div>
+	</div>
+
+	<div class="container-fluid">
+			<div class="modal fade" id="editModal" role="dialog">
+			<div class="modal-dialog">
+	  			<div class="modal-content">
+
+	    			<div class="modal-header">
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      				<h4 class="modal-title">Choose product</h4>
+	    			</div>
+
+	    			<div class="modal-body">
+	    				<table class='table table-responsive table-bordered table-striped'>
+						<thead>
+							<tr>
+								<th>Name</th>
+		         				<th>Category</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in items %}
+							<tr>
+								<td>{{ item.name }} </td>
+								<td>{{ item.category }} </td>
+								<td><a href="{% url 'edit_product' item.pk %}" class='btn btn-info'>Edit this</a></td>
+						    </tr>
+						    {% endfor %}
+						</tbody>
+					</table>
+	    			</div>
+
+	  			</div> 
+			</div>
+			</div>
+	</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>Login Failed</title>
+{% endblock %}
+
+{% block content %}
+	<script type="text/javascript">
+	alert("Incorrect Credentials. Sign up or Login again");
+		document.location.replace('/register/');
+	</script>
+{% endblock %}

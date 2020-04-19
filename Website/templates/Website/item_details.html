@@ -1,0 +1,246 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>{{item.name}}</title>
+{% endblock %}
+
+{% block bal %}
+{{ bal.wallet_balance }}
+{% endblock %}
+
+{% block content %}
+
+<!--     <form action="/charge" method="POST">
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="rzp_test_WyK93y9mvps7SN"
+            data-amount="5100"
+            data-name="Daft Punk"
+            data-description="Purchase Description"
+            data-image="vk.jpg"
+            data-netbanking="true"
+            data-description="Tron Legacy"
+            data-prefill.name="Harshil Mathur"
+            data-prefill.email="harshil@razorpay.com"
+            data-prefill.contact="9999999999"
+            data-notes.shopping_order_id="21">
+        </script>
+        <input type="hidden" name="shopping_order_id" value="21">
+</form> -->
+
+
+	<div class='container' id='list'>
+		<div class='row'>
+
+			{% if item.status %}
+			{% else %}
+				<div class='alert alert-danger'>
+					<h3 id='dang-box'><strong>Item is out of stock</strong></h3>
+				</div>
+			{% endif %}
+
+			<h2 id='itemname'>{{item.name}}</h2>
+			<div class='col-sm-4'>
+				<img id='detailpageimage' src="/static/{{ item.pic }}" class='img-responsive'/>
+			</div>
+			<div class='col-sm-8'>
+				<table class='table table-hover table-bordered table-condensed table-responsive'>
+					<thead>
+						<tr>
+							<th>Cost</th>
+							<th>Category</th>
+							<th>Status</th>
+							<th>Stock</th>
+							<th>Quantity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>₹ {{item.unit_price}}</td>
+							<td>{{item.category}}</td>
+							{% if item.status %}
+								<td>Available</td>
+							{% else %}
+								<td>Unavailable</td>
+							{% endif %}
+							<td id='maxiq'>{{item.quantity}}</td>
+							<td>
+								<input id='numb'>
+								<!-- <button id='disbtn' class='button' onclick="verifyNumber()"><span id='verbtn'>Confirm</span></button> -->
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class='panel panel-info' id='description'>
+					<div class='panel-heading'>
+						<h3>Description</h3>
+					</div>
+					<div class='panel-body'>
+						{{item.specs}}
+					</div>
+				</div>
+				
+				{% if user.is_authenticated %}
+					<a onclick='verifyNumber()' href="#" id='buybtn' class='btn btn-info btn-lg buy' data-toggle='modal' data-target="#confirmModal">
+						<span class='glyphicon glyphicon-usd'></span>
+						Buy Now
+					</a>&nbsp;
+					<a href='{% url "add_to_cart" item.pk %}' class='btn btn-info btn-lg buy' id="addCart">
+						<span class='glyphicon glyphicon-shopping-cart'></span>
+						Add to Cart
+					</a>
+				{% else %}
+					<button type='button' class='btn btn-info btn-lg' data-toggle="modal" data-target="#regModal">
+						<span class='glyphicon glyphicon-usd'></span>
+						Buy Now
+					</button>&nbsp;
+					<button type='button' class='btn btn-info btn-lg' data-toggle="modal" data-target="#regModal">
+						<span class='glyphicon glyphicon-shopping-cart'></span>
+						Add to Cart
+					</button>
+				{% endif %}
+
+				{% if item.status %}
+				{% else %}
+				<script type="text/javascript">
+					$('.buy').addClass('disabled');
+				</script>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<hr/>
+	
+	<div class='container'>
+		<div class='panel panel-info' id='revpanel'>
+			<div class='panel-heading'>
+				<h2 id='reviewhead'>Reviews</h2>
+			</div>
+		</div>
+
+		<div class='row'>
+			<div class='col-sm-5'>
+				<form method="POST" role='form'>
+						{% csrf_token %}
+					<div class='form-group'>
+						<label for="comment"><span id='write'>Write a review:</span></label>
+					</div> 
+					<div class='form-group'>
+						<input type="text" name="title" placeholder="Title">
+					</div>
+					<div class='form-group'>
+						<textarea name='comment' class="form-control" rows="5"></textarea>
+					</div>
+					<div class='form-group'>
+						{% if user.is_authenticated %}	
+							<button type="submit" class="btn btn-default">Submit</button>
+						{% else %}
+							<button type='button' class='btn btn-default' data-toggle="modal" data-target="#regModal">Submit</button>
+						{% endif %}
+					</div>
+				</form>
+			</div>
+
+			<div class='col-sm-6 col-sm-offset-1'>
+					<label><span class='write'>Read other reviews:</span></label>
+				<div class='panel panel-success'>	
+			
+					{% for review in reviews %}
+						<div class='panel-heading'>
+							<h2>{{review.title}}</h2>
+							<h3>-{{review.user.username}}</h3>
+						</div>
+						<div class='panel-body'>
+							<p>{{review.body}}</p>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+  		<div class="modal fade" id="regModal" role="dialog">
+    		<div class="modal-dialog">
+      			<div class="modal-content">
+
+        			<div class="modal-header">
+          				<button type="button" class="close" data-dismiss="modal">&times;</button>
+          				<h4 class="modal-title">Sign Up</h4>
+        			</div>
+
+        			<div class="modal-body">
+						<form method="post" action="/register/" role="form" id="user_form">
+						{% csrf_token %}
+					        <div class="form-group">
+					        	<label class="control-label" for="signupName"><span class="glyphicon glyphicon-user"></span>  Username</label>
+				              	<input id="name" name="username" type="text" maxlength="50" class="form-control">
+				            </div>
+				            <div class="form-group">
+				            	<label class="control-label" for="signupEmail"><span class='glyphicon glyphicon-envelope'></span> Email</label>
+				              	<input name="email" type="email" maxlength="50" class="form-control">
+				            </div>
+				            <div class="form-group">
+				            	<label class="control-label" for="signupPassword"><span class="glyphicon glyphicon-eye-open"> Password</label>
+				              	<input name="password" type="password" maxlength="25" class="form-control" placeholder="At least 6 characters" length="40">
+			            	</div>
+							<hr>
+							<div class="form-group">
+			              		<button type="submit" class="btn btn-success btn-block">Create your account</button>
+			            	</div>
+						</form>
+        			</div>
+
+      			</div> 
+    		</div>
+  		</div>
+	</div>
+
+	<div class="container">
+		<div class='modal fade' role='dialog' id='confirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class="modal-header">
+          				<h4 class="modal-title">Confirm Request</h4>
+        			</div>
+        			<div class='modal-body'>
+        				<div class='panel panel-info'>
+        					<div class='panel-heading'>
+        						<h2>{{item.name}}</h2>
+        					</div>
+        					<div class='panel-body'>
+        						<p>Unit Price: $<span id='unit'>{{item.unit_price}}</span></p>
+        						<p>Category: {{item.category}}</p>
+        						<p>Total Cost: $<span id='total'>   Hover To See Total</span></p>
+        					</div>
+        				</div>
+        			</div>
+        			<div class='modal-footer'>
+        				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        				<a href="{% url 'thanks_buy' item.pk %}" id='submission' class='btn btn-success hidden'>Confirm</a>
+
+        				<a href="#" onclick="document.getElementById('submission').click()" data-toggle='modal' data-target="#loadModal" class='btn btn-success'>Confirm</a>
+        			</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				document.getElementById('confirmModal').addEventListener('mouseover', calcTotal); 
+			</script>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class='modal fade' role='dialog' id='loadModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+        			<div class='modal-body'>
+        				 <div class="loader"></div> 
+        			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

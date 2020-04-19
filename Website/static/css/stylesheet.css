@@ -1,0 +1,158 @@
+.write {
+	font-size: 20px;
+}
+
+#revpanel {
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+#reviewhead {
+	font-family: cursive;
+	font-weight: bold;
+}
+
+hr {
+	border: 1px solid black;
+}
+
+#dang-box {
+	text-align: center;
+}
+
+.foot {
+	padding-top: 10px;
+}
+
+#navbarhome {
+	padding-bottom: 100px;
+}
+
+#itemname {
+	margin-left: 30px;
+	margin-bottom: 30px;
+	font-weight: bolder;
+	text-decoration: underline;
+}
+
+#wrongpass {
+	text-align: center;
+}
+
+#logout {
+	margin-right: 30px;
+}
+
+.modal-header, .close {
+      background-color: #51895c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+
+#myBtn {
+	margin-right: 10px;
+}
+
+#description {
+	margin-top: 80px;
+}
+
+body {
+	/*background-image: url('http://ridceo.rid.go.th/singhburi/oldweb/singhbur/images/Background%20webpage.jpg');*/
+}
+
+.thumbnail{       
+    background: #b38999; 
+    width: 300px; 
+    height: 400px;
+    overflow: auto;
+    text-align: center;
+}
+
+#detailpageimage {
+	height: 300px;
+	width: 300px;
+}
+
+#mainpageimage {
+	padding-top: 10px;
+	height: 200px;
+	width: 200px;
+}
+
+
+
+.footer-distributed{
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: normal 16px sans-serif;
+	padding: 45px 50px;
+	margin-top: 80px;
+}
+
+.footer-distributed .footer-left p{
+	color:  #8f9296;
+	font-size: 14px;
+	margin: 0;
+}
+
+/* Footer links */
+
+.footer-distributed p.footer-links{
+	font-size:18px;
+	font-weight: bold;
+	color:  #ffffff;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.footer-distributed p.footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color:  inherit;
+}
+
+.footer-distributed .footer-right{
+	float: right;
+	margin-top: 6px;
+	max-width: 180px;
+}
+
+.footer-distributed .footer-right a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	background-color:  #33383b;
+	border-radius: 2px;
+
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+
+	margin-left: 3px;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

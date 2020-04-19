@@ -1,0 +1,49 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>Sign Up</title>
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+	<script type="text/javascript">
+		document.location.replace('/');
+	</script>
+{% endif %})
+<br><br><br><br><br><br><br>
+
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-4 col-md-offset-4'>
+			<form method="post" action="" role="form" id="user_form" name='regform'>
+			{% csrf_token %}
+		        <div class="form-group">
+		        	<label class="control-label" for="signupName"><span class="glyphicon glyphicon-user"></span>  Username</label>
+	              	<input id="name" name="username" type="text" maxlength="50" class="form-control">
+	            </div>
+	            <div class="form-group">
+	            	<label class="control-label" for="signupEmail"><span class='glyphicon glyphicon-envelope'></span> Email</label>
+	              	<input name="email" type="email" maxlength="50" class="form-control">
+	            </div>
+	            
+	            <div class="form-group">
+	            	<label style='font-weight:bold;'class="control-label" for="signupPassword"><span class="glyphicon glyphicon-eye-open"> Password</label>
+	              	<input name="password" type="password" maxlength="25" class="form-control" placeholder="At least 6 characters" length="40">
+            	</div>
+
+				<div class="form-group">
+              		<button type="submit" class="btn btn-success btn-block">Create your account</button>
+            	</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% if already_member %}
+	<script type="text/javascript">
+		verifyRegForm();
+	</script>
+{% endif %}
+
+{% endblock %}

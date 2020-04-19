@@ -1,0 +1,51 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>Order Placed</title>
+{% endblock %}
+
+{% block bal %}
+{{ bal.wallet_balance }}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class='panel panel-info'>
+			<div class='panel-heading'>
+				<h2>Thank you for purchasing {{item.name}}</h2>
+			</div>
+			<div class='panel-body'>
+				<table class='table table-hover'>
+					<thead>
+						<tr>
+							<th>Total Cost</th>
+							<th>Category</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><p id='disptotal'></p></td>
+							<td>{{item.category}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui center aligned container">
+	<div class="row">
+		<div class='col-sm-6' style='margin-top: 30px;'>
+			<a href="{% url 'index' %}" class='btn btn-primary'>Continue Shopping</a>
+		</div>
+		<div class='col-sm-6' style='margin-top: 30px;'>
+			<a href="" onclick="window.print();" class='btn btn-warning'>Print Receipt</a>
+		</div>
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		document.getElementById('disptotal').innerHTML = '$' + window.name;
+	</script>
+
+{% endblock %}

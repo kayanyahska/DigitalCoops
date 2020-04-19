@@ -1,0 +1,36 @@
+{% extends 'Website/base.html' %}
+
+{% block content %}
+	<div class="ui center aligned container">
+		<table class='table table-responsive table-bordered table-striped'>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>Unit Cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ item.name }} </td>
+					<td>{{ item.category }} </td>
+					<td>{{ item.unit_price }} </td>
+			    </tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h2>Enter new data</h2>
+		</div>
+		<div class="panel-body" style="text-align: center;">
+		    <form method="POST" class="post-form" enctype="multipart/form-data">
+		    {% csrf_token %}    
+		        {{ event_form.as_p }}
+		        <button type="submit" class="save btn btn-primary">Submit</button>
+		    </form>
+		</div>
+	</div>
+		
+{% endblock %}

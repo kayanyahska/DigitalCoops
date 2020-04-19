@@ -1,0 +1,33 @@
+{% extends 'Website/base.html' %}
+
+{% block title %}
+	<title>Your cart</title>
+{% endblock %}
+
+{% block bal %}
+{{ bal.wallet_balance }}
+{% endblock %}
+
+{% block content %}
+	<div class='container'>
+	    <table class='table table-responsive table-striped'>
+	        <tr>
+	            <th>Product</th>
+	            <!-- <th>Quantity</th> -->
+	            <th>Total Price</th>
+	            <th>Remove Item</th>
+	        </tr>
+	        {% for item in cart %}
+	        <tr>
+	            <td>{{ item.item.name }}</td>
+	            <!-- <td>{{ item.quantity }}</td> -->
+	            <td>{{ item.item.unit_price }}</td>
+	            <td><a href="{% url 'remove_from_cart' item.pk %}" class='btn btn-primary'>Click to remove</a></td>
+	        </tr>
+	        {% endfor %}
+	    </table>
+
+	    <a onmouseover= "thisOne()" href="{% url 'thanks_cart' pay %}" class="btn btn-primary" id='paybtn'><span id='cartstat'>Pay $<span id='amount'>{{pay}}</span> and Checkout</span></a>
+	</div>
+
+{% endblock %}
